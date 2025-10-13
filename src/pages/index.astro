@@ -42,7 +42,7 @@ interface ContributionData {
 				background: #0a0a1a;
 				color: #5fed83;
 				min-height: 100vh;
-				padding: 20px;
+				padding: 60px 20px 20px;
 				background-image: 
 					repeating-linear-gradient(
 						0deg,
@@ -77,12 +77,9 @@ interface ContributionData {
 				margin-bottom: 10px;
 				color: #5fed83;
 				text-shadow: 
+					0 0 5px #5fed83,
 					0 0 10px #5fed83,
-					0 0 20px #5fed83,
-					0 0 30px #5fed83,
-					0 0 40px #8a2be2,
-					0 0 70px #8a2be2,
-					0 0 100px #8a2be2;
+					0 0 15px rgba(138, 43, 226, 0.5);
 				animation: glowPulse 2s ease-in-out infinite alternate, textShake 0.5s ease-in-out infinite;
 				letter-spacing: 0.1em;
 				transform-origin: center;
@@ -91,28 +88,23 @@ interface ContributionData {
 			@keyframes glowPulse {
 				from {
 					text-shadow: 
+						0 0 5px #5fed83,
 						0 0 10px #5fed83,
-						0 0 20px #5fed83,
-						0 0 30px #5fed83,
-						0 0 40px #8a2be2,
-						0 0 70px #8a2be2;
+						0 0 15px rgba(138, 43, 226, 0.5);
 				}
 				to {
 					text-shadow: 
-						0 0 20px #5fed83,
-						0 0 30px #5fed83,
-						0 0 40px #5fed83,
-						0 0 50px #8a2be2,
-						0 0 80px #8a2be2,
-						0 0 120px #8a2be2;
+						0 0 8px #5fed83,
+						0 0 15px #5fed83,
+						0 0 20px rgba(138, 43, 226, 0.6);
 				}
 			}
 
 			@keyframes textShake {
 				0%, 100% { transform: translate(0, 0) rotate(0deg); }
-				25% { transform: translate(1px, 1px) rotate(0.5deg); }
+				25% { transform: translate(0.3px, 0.3px) rotate(0.1deg); }
 				50% { transform: translate(0, 0) rotate(0deg); }
-				75% { transform: translate(-1px, 1px) rotate(-0.5deg); }
+				75% { transform: translate(-0.3px, 0.3px) rotate(-0.1deg); }
 			}
 
 			.subtitle {
@@ -121,8 +113,8 @@ interface ContributionData {
 				margin-bottom: 40px;
 				color: #8a2be2;
 				text-shadow: 
-					0 0 5px #8a2be2,
-					0 0 10px #8a2be2;
+					0 0 3px #8a2be2,
+					0 0 6px rgba(138, 43, 226, 0.5);
 				animation: subtitlePulse 3s ease-in-out infinite;
 			}
 
@@ -161,7 +153,7 @@ interface ContributionData {
 				font-size: 0.7rem;
 				text-transform: uppercase;
 				color: #8a2be2;
-				text-shadow: 0 0 5px #8a2be2;
+				text-shadow: 0 0 3px rgba(138, 43, 226, 0.5);
 			}
 
 			input {
@@ -174,18 +166,17 @@ interface ContributionData {
 				outline: none;
 				min-width: 250px;
 				box-shadow: 
-					0 0 15px rgba(95, 237, 131, 0.4),
-					inset 0 0 15px rgba(95, 237, 131, 0.1),
-					0 0 30px rgba(138, 43, 226, 0.2);
+					0 0 8px rgba(95, 237, 131, 0.3),
+					inset 0 0 8px rgba(95, 237, 131, 0.08);
 				transition: all 0.3s ease;
 			}
 
 			input:focus {
 				border-color: #8a2be2;
 				box-shadow: 
-					0 0 25px rgba(95, 237, 131, 0.6),
-					inset 0 0 20px rgba(95, 237, 131, 0.2),
-					0 0 50px rgba(138, 43, 226, 0.5);
+					0 0 12px rgba(95, 237, 131, 0.4),
+					inset 0 0 10px rgba(95, 237, 131, 0.15),
+					0 0 20px rgba(138, 43, 226, 0.3);
 				transform: scale(1.02);
 			}
 
@@ -201,8 +192,8 @@ interface ContributionData {
 				transition: all 0.3s;
 				box-shadow: 
 					0 5px 0 #3d9e5c,
-					0 0 20px rgba(95, 237, 131, 0.5),
-					0 0 40px rgba(138, 43, 226, 0.3);
+					0 0 10px rgba(95, 237, 131, 0.3),
+					0 0 20px rgba(138, 43, 226, 0.2);
 				position: relative;
 				top: 0;
 				font-weight: bold;
@@ -213,14 +204,14 @@ interface ContributionData {
 				0%, 100% {
 					box-shadow: 
 						0 5px 0 #3d9e5c,
-						0 0 20px rgba(95, 237, 131, 0.5),
-						0 0 40px rgba(138, 43, 226, 0.3);
+						0 0 10px rgba(95, 237, 131, 0.3),
+						0 0 20px rgba(138, 43, 226, 0.2);
 				}
 				50% {
 					box-shadow: 
 						0 5px 0 #3d9e5c,
-						0 0 30px rgba(95, 237, 131, 0.7),
-						0 0 60px rgba(138, 43, 226, 0.5);
+						0 0 15px rgba(95, 237, 131, 0.4),
+						0 0 30px rgba(138, 43, 226, 0.3);
 				}
 			}
 
@@ -229,8 +220,8 @@ interface ContributionData {
 				border-color: #8a2be2;
 				box-shadow: 
 					0 3px 0 #5a1c94,
-					0 0 30px rgba(138, 43, 226, 0.7),
-					0 0 60px rgba(95, 237, 131, 0.5);
+					0 0 15px rgba(138, 43, 226, 0.4),
+					0 0 30px rgba(95, 237, 131, 0.3);
 				top: 2px;
 				transform: scale(1.05);
 			}
@@ -238,7 +229,7 @@ interface ContributionData {
 			button:active {
 				box-shadow: 
 					0 0 0 #5a1c94,
-					0 0 40px rgba(138, 43, 226, 0.9);
+					0 0 20px rgba(138, 43, 226, 0.5);
 				top: 5px;
 			}
 
@@ -282,9 +273,8 @@ interface ContributionData {
 				border: 3px solid #5fed83;
 				padding: 20px;
 				box-shadow: 
-					0 0 30px rgba(95, 237, 131, 0.4),
-					inset 0 0 30px rgba(95, 237, 131, 0.05),
-					0 0 50px rgba(138, 43, 226, 0.2);
+					0 0 15px rgba(95, 237, 131, 0.25),
+					inset 0 0 15px rgba(95, 237, 131, 0.03);
 				position: relative;
 				overflow: hidden;
 				transition: all 0.3s ease;
@@ -314,9 +304,9 @@ interface ContributionData {
 			.user-section:hover {
 				border-color: #8a2be2;
 				box-shadow: 
-					0 0 40px rgba(138, 43, 226, 0.6),
-					inset 0 0 40px rgba(138, 43, 226, 0.1),
-					0 0 60px rgba(95, 237, 131, 0.3);
+					0 0 20px rgba(138, 43, 226, 0.35),
+					inset 0 0 20px rgba(138, 43, 226, 0.05),
+					0 0 30px rgba(95, 237, 131, 0.2);
 				transform: translateY(-5px);
 			}
 
@@ -331,8 +321,8 @@ interface ContributionData {
 				margin-bottom: 10px;
 				color: #5fed83;
 				text-shadow: 
-					0 0 10px #5fed83,
-					0 0 20px #5fed83;
+					0 0 5px rgba(95, 237, 131, 0.5),
+					0 0 10px rgba(95, 237, 131, 0.3);
 				animation: namePulse 2s ease-in-out infinite;
 			}
 
@@ -345,7 +335,7 @@ interface ContributionData {
 				font-size: 0.7rem;
 				color: #8a2be2;
 				margin-bottom: 10px;
-				text-shadow: 0 0 5px #8a2be2;
+				text-shadow: 0 0 3px rgba(138, 43, 226, 0.5);
 			}
 
 			.contribution-graph {
@@ -377,8 +367,8 @@ interface ContributionData {
 				transform: scale(1.5);
 				border-color: #8a2be2;
 				box-shadow: 
-					0 0 10px rgba(95, 237, 131, 0.8),
-					0 0 20px rgba(138, 43, 226, 0.6);
+					0 0 6px rgba(95, 237, 131, 0.5),
+					0 0 12px rgba(138, 43, 226, 0.4);
 				z-index: 10;
 			}
 
@@ -388,8 +378,8 @@ interface ContributionData {
 				padding: 40px;
 				color: #5fed83;
 				text-shadow: 
-					0 0 10px #5fed83,
-					0 0 20px #8a2be2;
+					0 0 5px rgba(95, 237, 131, 0.5),
+					0 0 10px rgba(138, 43, 226, 0.3);
 				animation: pulse 1.5s ease-in-out infinite, colorShift 3s ease-in-out infinite;
 			}
 
@@ -412,8 +402,8 @@ interface ContributionData {
 				background: rgba(255, 51, 102, 0.1);
 				margin: 20px 0;
 				box-shadow: 
-					0 0 20px rgba(255, 51, 102, 0.5),
-					inset 0 0 20px rgba(255, 51, 102, 0.1);
+					0 0 10px rgba(255, 51, 102, 0.3),
+					inset 0 0 10px rgba(255, 51, 102, 0.08);
 				animation: errorShake 0.5s ease-in-out;
 			}
 
