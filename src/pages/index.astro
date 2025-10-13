@@ -30,7 +30,7 @@ interface ContributionData {
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-		<style>
+		<style is:global>
 			* {
 				margin: 0;
 				padding: 0;
@@ -368,6 +368,9 @@ interface ContributionData {
 				height: 12px;
 				border: 1px solid rgba(95, 237, 131, 0.3);
 				transition: all 0.2s ease;
+				min-height: 12px;
+				min-width: 12px;
+				flex-shrink: 0;
 			}
 
 			.contribution-day:hover {
