@@ -1,5 +1,23 @@
 ---
-
+interface ContributionData {
+	generated_at: string;
+	from: string;
+	to: string;
+	total_contributions: number;
+	weeks: {
+		index: number;
+		first_day: string;
+		contribution_days: {
+			date: string;
+			weekday: number;
+			count: number;
+			color: string;
+			level: number;
+		}[];
+	}[];
+	colors: string[];
+	zero_color: string;
+}
 ---
 
 <html lang="en">
@@ -8,9 +26,390 @@
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
+		<title>Mona Mayhem - GitHub Contribution Battle!</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+
+			body {
+				font-family: 'Press Start 2P', cursive;
+				background: #0f0f23;
+				color: #00ff00;
+				min-height: 100vh;
+				padding: 20px;
+				background-image: 
+					repeating-linear-gradient(
+						0deg,
+						rgba(0, 255, 0, 0.03) 0px,
+						rgba(0, 255, 0, 0.03) 1px,
+						transparent 1px,
+						transparent 2px
+					);
+			}
+
+			.container {
+				max-width: 1400px;
+				margin: 0 auto;
+			}
+
+			h1 {
+				text-align: center;
+				font-size: 2rem;
+				margin-bottom: 10px;
+				text-shadow: 
+					0 0 10px #00ff00,
+					0 0 20px #00ff00,
+					0 0 30px #00ff00;
+				animation: glow 2s ease-in-out infinite alternate;
+			}
+
+			@keyframes glow {
+				from {
+					text-shadow: 
+						0 0 10px #00ff00,
+						0 0 20px #00ff00,
+						0 0 30px #00ff00;
+				}
+				to {
+					text-shadow: 
+						0 0 20px #00ff00,
+						0 0 30px #00ff00,
+						0 0 40px #00ff00,
+						0 0 50px #00ff00;
+				}
+			}
+
+			.subtitle {
+				text-align: center;
+				font-size: 0.8rem;
+				margin-bottom: 40px;
+				color: #00cc00;
+			}
+
+			.input-section {
+				display: flex;
+				gap: 20px;
+				justify-content: center;
+				margin-bottom: 40px;
+				flex-wrap: wrap;
+			}
+
+			.input-group {
+				display: flex;
+				flex-direction: column;
+				gap: 10px;
+			}
+
+			label {
+				font-size: 0.7rem;
+				text-transform: uppercase;
+			}
+
+			input {
+				font-family: 'Press Start 2P', cursive;
+				font-size: 0.8rem;
+				padding: 15px;
+				background: #1a1a2e;
+				border: 3px solid #00ff00;
+				color: #00ff00;
+				outline: none;
+				min-width: 250px;
+				box-shadow: 
+					0 0 10px rgba(0, 255, 0, 0.3),
+					inset 0 0 10px rgba(0, 255, 0, 0.1);
+			}
+
+			input:focus {
+				box-shadow: 
+					0 0 20px rgba(0, 255, 0, 0.5),
+					inset 0 0 10px rgba(0, 255, 0, 0.2);
+			}
+
+			button {
+				font-family: 'Press Start 2P', cursive;
+				font-size: 0.9rem;
+				padding: 15px 30px;
+				background: #00ff00;
+				color: #0f0f23;
+				border: 3px solid #00ff00;
+				cursor: pointer;
+				text-transform: uppercase;
+				transition: all 0.3s;
+				box-shadow: 0 5px 0 #00cc00;
+				position: relative;
+				top: 0;
+			}
+
+			button:hover {
+				background: #00cc00;
+				box-shadow: 0 3px 0 #009900;
+				top: 2px;
+			}
+
+			button:active {
+				box-shadow: 0 0 0 #009900;
+				top: 5px;
+			}
+
+			button:disabled {
+				background: #333;
+				color: #666;
+				border-color: #666;
+				box-shadow: 0 5px 0 #222;
+				cursor: not-allowed;
+				top: 0;
+			}
+
+			.comparison-area {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 40px;
+				margin-top: 40px;
+			}
+
+			@media (max-width: 1024px) {
+				.comparison-area {
+					grid-template-columns: 1fr;
+				}
+			}
+
+			.user-section {
+				background: #1a1a2e;
+				border: 3px solid #00ff00;
+				padding: 20px;
+				box-shadow: 
+					0 0 20px rgba(0, 255, 0, 0.3),
+					inset 0 0 20px rgba(0, 255, 0, 0.05);
+			}
+
+			.user-header {
+				margin-bottom: 20px;
+			}
+
+			.user-name {
+				font-size: 1.2rem;
+				margin-bottom: 10px;
+				color: #00ff00;
+			}
+
+			.user-stats {
+				font-size: 0.7rem;
+				color: #00cc00;
+				margin-bottom: 10px;
+			}
+
+			.contribution-graph {
+				display: flex;
+				gap: 2px;
+				overflow-x: auto;
+				padding: 10px 0;
+			}
+
+			.week-column {
+				display: flex;
+				flex-direction: column;
+				gap: 2px;
+			}
+
+			.contribution-day {
+				width: 12px;
+				height: 12px;
+				border: 1px solid rgba(0, 255, 0, 0.2);
+			}
+
+			.loading {
+				text-align: center;
+				font-size: 0.8rem;
+				padding: 40px;
+				color: #00cc00;
+				animation: pulse 1.5s ease-in-out infinite;
+			}
+
+			@keyframes pulse {
+				0%, 100% { opacity: 1; }
+				50% { opacity: 0.5; }
+			}
+
+			.error {
+				text-align: center;
+				font-size: 0.7rem;
+				padding: 20px;
+				color: #ff0000;
+				border: 3px solid #ff0000;
+				background: rgba(255, 0, 0, 0.1);
+				margin: 20px 0;
+			}
+
+			.vs-badge {
+				text-align: center;
+				font-size: 3rem;
+				color: #ff00ff;
+				text-shadow: 
+					0 0 10px #ff00ff,
+					0 0 20px #ff00ff;
+				margin: 40px 0;
+			}
+
+			@media (max-width: 768px) {
+				h1 {
+					font-size: 1.2rem;
+				}
+
+				.subtitle {
+					font-size: 0.6rem;
+				}
+
+				.input-section {
+					flex-direction: column;
+					align-items: stretch;
+				}
+
+				input {
+					min-width: 100%;
+				}
+			}
+		</style>
 	</head>
 	<body>
-		<h1>Astro</h1>
+		<div class="container">
+			<h1>MONA MAYHEM</h1>
+			<p class="subtitle">⚔️ GitHub Contribution Battle Arena ⚔️</p>
+
+			<div class="input-section">
+				<div class="input-group">
+					<label for="user1">Player 1 Username:</label>
+					<input type="text" id="user1" placeholder="octocat" />
+				</div>
+
+				<div class="input-group">
+					<label for="user2">Player 2 Username:</label>
+					<input type="text" id="user2" placeholder="torvalds" />
+				</div>
+
+				<button id="compareBtn">⚡ BATTLE! ⚡</button>
+			</div>
+
+			<div id="results"></div>
+		</div>
+
+		<script>
+			interface ContributionData {
+				generated_at: string;
+				from: string;
+				to: string;
+				total_contributions: number;
+				weeks: {
+					index: number;
+					first_day: string;
+					contribution_days: {
+						date: string;
+						weekday: number;
+						count: number;
+						color: string;
+						level: number;
+					}[];
+				}[];
+				colors: string[];
+				zero_color: string;
+			}
+
+			async function fetchContributions(username: string): Promise<ContributionData> {
+				const response = await fetch(`/api/contributions/${username}`);
+				if (!response.ok) {
+					const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
+					throw new Error(errorData.error || `Failed to fetch contributions for ${username}`);
+				}
+				return response.json();
+			}
+
+			function renderContributionGraph(data: ContributionData): string {
+				return data.weeks.map(week => `
+					<div class="week-column">
+						${week.contribution_days.map(day => `
+							<div class="contribution-day" 
+								 style="background-color: ${day.color};" 
+								 title="${day.date}: ${day.count} contributions">
+							</div>
+						`).join('')}
+					</div>
+				`).join('');
+			}
+
+			function renderUserSection(username: string, data: ContributionData): string {
+				return `
+					<div class="user-section">
+						<div class="user-header">
+							<div class="user-name">👤 ${username}</div>
+							<div class="user-stats">
+								Total Contributions: ${data.total_contributions.toLocaleString()}<br>
+								Period: ${data.from} to ${data.to}
+							</div>
+						</div>
+						<div class="contribution-graph">
+							${renderContributionGraph(data)}
+						</div>
+					</div>
+				`;
+			}
+
+			async function compare() {
+				const user1Input = document.getElementById('user1') as HTMLInputElement;
+				const user2Input = document.getElementById('user2') as HTMLInputElement;
+				const results = document.getElementById('results')!;
+				const compareBtn = document.getElementById('compareBtn') as HTMLButtonElement;
+
+				const user1 = user1Input.value.trim();
+				const user2 = user2Input.value.trim();
+
+				if (!user1 || !user2) {
+					results.innerHTML = '<div class="error">⚠️ Please enter both usernames! ⚠️</div>';
+					return;
+				}
+
+				compareBtn.disabled = true;
+				results.innerHTML = '<div class="loading">⚡ Loading battle data... ⚡</div>';
+
+				try {
+					const [data1, data2] = await Promise.all([
+						fetchContributions(user1),
+						fetchContributions(user2)
+					]);
+
+					results.innerHTML = `
+						<div class="vs-badge">VS</div>
+						<div class="comparison-area">
+							${renderUserSection(user1, data1)}
+							${renderUserSection(user2, data2)}
+						</div>
+					`;
+				} catch (error) {
+					results.innerHTML = `
+						<div class="error">
+							💥 ERROR 💥<br><br>
+							${error instanceof Error ? error.message : 'Failed to fetch contribution data'}<br>
+							Please check the usernames and try again!
+						</div>
+					`;
+				} finally {
+					compareBtn.disabled = false;
+				}
+			}
+
+			document.getElementById('compareBtn')?.addEventListener('click', compare);
+			
+			// Allow Enter key to trigger comparison
+			document.getElementById('user1')?.addEventListener('keypress', (e) => {
+				if (e.key === 'Enter') compare();
+			});
+			document.getElementById('user2')?.addEventListener('keypress', (e) => {
+				if (e.key === 'Enter') compare();
+			});
+		</script>
 	</body>
 </html>
