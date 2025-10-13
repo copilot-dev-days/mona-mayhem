@@ -1,0 +1,598 @@
+---
+interface ContributionData {
+	generated_at: string;
+	from: string;
+	to: string;
+	total_contributions: number;
+	weeks: {
+		index: number;
+		first_day: string;
+		contribution_days: {
+			date: string;
+			weekday: number;
+			count: number;
+			color: string;
+			level: number;
+		}[];
+	}[];
+	colors: string[];
+	zero_color: string;
+}
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Mona Mayhem - GitHub Contribution Battle!</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+		<style is:global>
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+
+			body {
+				font-family: 'Press Start 2P', cursive;
+				background: #0a0a1a;
+				color: #5fed83;
+				min-height: 100vh;
+				padding: 60px 20px 20px;
+				background-image: 
+					repeating-linear-gradient(
+						0deg,
+						rgba(95, 237, 131, 0.05) 0px,
+						rgba(95, 237, 131, 0.05) 1px,
+						transparent 1px,
+						transparent 2px
+					),
+					repeating-linear-gradient(
+						90deg,
+						rgba(138, 43, 226, 0.03) 0px,
+						rgba(138, 43, 226, 0.03) 1px,
+						transparent 1px,
+						transparent 4px
+					);
+				animation: scanlines 8s linear infinite;
+			}
+
+			@keyframes scanlines {
+				0% { background-position: 0 0, 0 0; }
+				100% { background-position: 0 100px, 0 0; }
+			}
+
+			.container {
+				max-width: 1400px;
+				margin: 0 auto;
+			}
+
+			h1 {
+				text-align: center;
+				font-size: 2.5rem;
+				margin-bottom: 10px;
+				color: #5fed83;
+				text-shadow: 
+					0 0 5px #5fed83,
+					0 0 10px #5fed83,
+					0 0 15px rgba(138, 43, 226, 0.5);
+				animation: glowPulse 2s ease-in-out infinite alternate, textShake 0.5s ease-in-out infinite;
+				letter-spacing: 0.1em;
+				transform-origin: center;
+			}
+
+			@keyframes glowPulse {
+				from {
+					text-shadow: 
+						0 0 5px #5fed83,
+						0 0 10px #5fed83,
+						0 0 15px rgba(138, 43, 226, 0.5);
+				}
+				to {
+					text-shadow: 
+						0 0 8px #5fed83,
+						0 0 15px #5fed83,
+						0 0 20px rgba(138, 43, 226, 0.6);
+				}
+			}
+
+			@keyframes textShake {
+				0%, 100% { transform: translate(0, 0) rotate(0deg); }
+				25% { transform: translate(0.3px, 0.3px) rotate(0.1deg); }
+				50% { transform: translate(0, 0) rotate(0deg); }
+				75% { transform: translate(-0.3px, 0.3px) rotate(-0.1deg); }
+			}
+
+			.subtitle {
+				text-align: center;
+				font-size: 0.8rem;
+				margin-bottom: 40px;
+				color: #8a2be2;
+				text-shadow: 
+					0 0 3px #8a2be2,
+					0 0 6px rgba(138, 43, 226, 0.5);
+				animation: subtitlePulse 3s ease-in-out infinite;
+			}
+
+			@keyframes subtitlePulse {
+				0%, 100% { opacity: 0.8; }
+				50% { opacity: 1; }
+			}
+
+			.input-section {
+				display: flex;
+				gap: 20px;
+				justify-content: center;
+				margin-bottom: 40px;
+				flex-wrap: wrap;
+			}
+
+			.input-group {
+				display: flex;
+				flex-direction: column;
+				gap: 10px;
+				animation: floatIn 1s ease-out;
+			}
+
+			@keyframes floatIn {
+				from {
+					opacity: 0;
+					transform: translateY(-20px);
+				}
+				to {
+					opacity: 1;
+					transform: translateY(0);
+				}
+			}
+
+			label {
+				font-size: 0.7rem;
+				text-transform: uppercase;
+				color: #8a2be2;
+				text-shadow: 0 0 3px rgba(138, 43, 226, 0.5);
+			}
+
+			input {
+				font-family: 'Press Start 2P', cursive;
+				font-size: 0.8rem;
+				padding: 15px;
+				background: #1a1a2e;
+				border: 3px solid #5fed83;
+				color: #5fed83;
+				outline: none;
+				min-width: 250px;
+				box-shadow: 
+					0 0 8px rgba(95, 237, 131, 0.3),
+					inset 0 0 8px rgba(95, 237, 131, 0.08);
+				transition: all 0.3s ease;
+			}
+
+			input:focus {
+				border-color: #8a2be2;
+				box-shadow: 
+					0 0 12px rgba(95, 237, 131, 0.4),
+					inset 0 0 10px rgba(95, 237, 131, 0.15),
+					0 0 20px rgba(138, 43, 226, 0.3);
+				transform: scale(1.02);
+			}
+
+			button {
+				font-family: 'Press Start 2P', cursive;
+				font-size: 0.9rem;
+				padding: 15px 30px;
+				background: linear-gradient(135deg, #5fed83 0%, #8a2be2 100%);
+				color: #0a0a1a;
+				border: 3px solid #5fed83;
+				cursor: pointer;
+				text-transform: uppercase;
+				transition: all 0.3s;
+				box-shadow: 
+					0 5px 0 #3d9e5c,
+					0 0 10px rgba(95, 237, 131, 0.3),
+					0 0 20px rgba(138, 43, 226, 0.2);
+				position: relative;
+				top: 0;
+				font-weight: bold;
+				animation: buttonPulse 2s ease-in-out infinite;
+			}
+
+			@keyframes buttonPulse {
+				0%, 100% {
+					box-shadow: 
+						0 5px 0 #3d9e5c,
+						0 0 10px rgba(95, 237, 131, 0.3),
+						0 0 20px rgba(138, 43, 226, 0.2);
+				}
+				50% {
+					box-shadow: 
+						0 5px 0 #3d9e5c,
+						0 0 15px rgba(95, 237, 131, 0.4),
+						0 0 30px rgba(138, 43, 226, 0.3);
+				}
+			}
+
+			button:hover {
+				background: linear-gradient(135deg, #8a2be2 0%, #5fed83 100%);
+				border-color: #8a2be2;
+				box-shadow: 
+					0 3px 0 #5a1c94,
+					0 0 15px rgba(138, 43, 226, 0.4),
+					0 0 30px rgba(95, 237, 131, 0.3);
+				top: 2px;
+				transform: scale(1.05);
+			}
+
+			button:active {
+				box-shadow: 
+					0 0 0 #5a1c94,
+					0 0 20px rgba(138, 43, 226, 0.5);
+				top: 5px;
+			}
+
+			button:disabled {
+				background: #333;
+				color: #666;
+				border-color: #666;
+				box-shadow: 0 5px 0 #222;
+				cursor: not-allowed;
+				top: 0;
+				animation: none;
+			}
+
+			.comparison-area {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 40px;
+				margin-top: 40px;
+				animation: slideUp 0.8s ease-out;
+			}
+
+			@keyframes slideUp {
+				from {
+					opacity: 0;
+					transform: translateY(30px);
+				}
+				to {
+					opacity: 1;
+					transform: translateY(0);
+				}
+			}
+
+			@media (max-width: 1024px) {
+				.comparison-area {
+					grid-template-columns: 1fr;
+				}
+			}
+
+			.user-section {
+				background: linear-gradient(135deg, rgba(26, 26, 46, 0.9) 0%, rgba(20, 20, 40, 0.9) 100%);
+				border: 3px solid #5fed83;
+				padding: 20px;
+				box-shadow: 
+					0 0 15px rgba(95, 237, 131, 0.25),
+					inset 0 0 15px rgba(95, 237, 131, 0.03);
+				position: relative;
+				overflow: hidden;
+				transition: all 0.3s ease;
+			}
+
+			.user-section::before {
+				content: '';
+				position: absolute;
+				top: -50%;
+				left: -50%;
+				width: 200%;
+				height: 200%;
+				background: linear-gradient(
+					45deg,
+					transparent 30%,
+					rgba(95, 237, 131, 0.1) 50%,
+					transparent 70%
+				);
+				animation: shine 3s linear infinite;
+			}
+
+			@keyframes shine {
+				0% { transform: rotate(0deg) translate(0, 0); }
+				100% { transform: rotate(360deg) translate(0, 0); }
+			}
+
+			.user-section:hover {
+				border-color: #8a2be2;
+				box-shadow: 
+					0 0 20px rgba(138, 43, 226, 0.35),
+					inset 0 0 20px rgba(138, 43, 226, 0.05),
+					0 0 30px rgba(95, 237, 131, 0.2);
+				transform: translateY(-5px);
+			}
+
+			.user-header {
+				margin-bottom: 20px;
+				position: relative;
+				z-index: 1;
+			}
+
+			.user-name {
+				font-size: 1.2rem;
+				margin-bottom: 10px;
+				color: #5fed83;
+				text-shadow: 
+					0 0 5px rgba(95, 237, 131, 0.5),
+					0 0 10px rgba(95, 237, 131, 0.3);
+				animation: namePulse 2s ease-in-out infinite;
+			}
+
+			@keyframes namePulse {
+				0%, 100% { opacity: 0.9; }
+				50% { opacity: 1; }
+			}
+
+			.user-stats {
+				font-size: 0.7rem;
+				color: #8a2be2;
+				margin-bottom: 10px;
+				text-shadow: 0 0 3px rgba(138, 43, 226, 0.5);
+			}
+
+			.contribution-graph {
+				display: flex;
+				gap: 2px;
+				overflow-x: auto;
+				padding: 10px 0;
+				position: relative;
+				z-index: 1;
+			}
+
+			.week-column {
+				display: flex;
+				flex-direction: column;
+				gap: 2px;
+			}
+
+			.contribution-day {
+				width: 12px;
+				height: 12px;
+				border: 1px solid rgba(95, 237, 131, 0.3);
+				transition: all 0.2s ease;
+				min-height: 12px;
+				min-width: 12px;
+				flex-shrink: 0;
+			}
+
+			.contribution-day:hover {
+				transform: scale(1.5);
+				border-color: #8a2be2;
+				box-shadow: 
+					0 0 6px rgba(95, 237, 131, 0.5),
+					0 0 12px rgba(138, 43, 226, 0.4);
+				z-index: 10;
+			}
+
+			.loading {
+				text-align: center;
+				font-size: 0.8rem;
+				padding: 40px;
+				color: #5fed83;
+				text-shadow: 
+					0 0 5px rgba(95, 237, 131, 0.5),
+					0 0 10px rgba(138, 43, 226, 0.3);
+				animation: pulse 1.5s ease-in-out infinite, colorShift 3s ease-in-out infinite;
+			}
+
+			@keyframes pulse {
+				0%, 100% { opacity: 1; transform: scale(1); }
+				50% { opacity: 0.6; transform: scale(1.05); }
+			}
+
+			@keyframes colorShift {
+				0%, 100% { color: #5fed83; }
+				50% { color: #8a2be2; }
+			}
+
+			.error {
+				text-align: center;
+				font-size: 0.7rem;
+				padding: 20px;
+				color: #ff3366;
+				border: 3px solid #ff3366;
+				background: rgba(255, 51, 102, 0.1);
+				margin: 20px 0;
+				box-shadow: 
+					0 0 10px rgba(255, 51, 102, 0.3),
+					inset 0 0 10px rgba(255, 51, 102, 0.08);
+				animation: errorShake 0.5s ease-in-out;
+			}
+
+			@keyframes errorShake {
+				0%, 100% { transform: translateX(0); }
+				25% { transform: translateX(-10px); }
+				75% { transform: translateX(10px); }
+			}
+
+			.vs-badge {
+				text-align: center;
+				font-size: 3rem;
+				background: linear-gradient(135deg, #5fed83, #8a2be2, #5fed83);
+				background-size: 200% 200%;
+				-webkit-background-clip: text;
+				-webkit-text-fill-color: transparent;
+				background-clip: text;
+				text-shadow: none;
+				margin: 40px 0;
+				animation: gradientShift 3s ease infinite, vsPulse 2s ease-in-out infinite;
+				font-weight: bold;
+				letter-spacing: 0.2em;
+			}
+
+			@keyframes gradientShift {
+				0% { background-position: 0% 50%; }
+				50% { background-position: 100% 50%; }
+				100% { background-position: 0% 50%; }
+			}
+
+			@keyframes vsPulse {
+				0%, 100% { transform: scale(1) rotate(0deg); }
+				50% { transform: scale(1.1) rotate(2deg); }
+			}
+
+			@media (max-width: 768px) {
+				h1 {
+					font-size: 1.2rem;
+				}
+
+				.subtitle {
+					font-size: 0.6rem;
+				}
+
+				.input-section {
+					flex-direction: column;
+					align-items: stretch;
+				}
+
+				input {
+					min-width: 100%;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<h1>MONA MAYHEM</h1>
+			<p class="subtitle">⚔️ GitHub Contribution Battle Arena ⚔️</p>
+
+			<div class="input-section">
+				<div class="input-group">
+					<label for="user1">Player 1 Username:</label>
+					<input type="text" id="user1" placeholder="octocat" />
+				</div>
+
+				<div class="input-group">
+					<label for="user2">Player 2 Username:</label>
+					<input type="text" id="user2" placeholder="torvalds" />
+				</div>
+
+				<button id="compareBtn">⚡ BATTLE! ⚡</button>
+			</div>
+
+			<div id="results"></div>
+		</div>
+
+		<script>
+			interface ContributionData {
+				generated_at: string;
+				from: string;
+				to: string;
+				total_contributions: number;
+				weeks: {
+					index: number;
+					first_day: string;
+					contribution_days: {
+						date: string;
+						weekday: number;
+						count: number;
+						color: string;
+						level: number;
+					}[];
+				}[];
+				colors: string[];
+				zero_color: string;
+			}
+
+			async function fetchContributions(username: string): Promise<ContributionData> {
+				const response = await fetch(`/api/contributions/${username}`);
+				if (!response.ok) {
+					const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
+					throw new Error(errorData.error || `Failed to fetch contributions for ${username}`);
+				}
+				return response.json();
+			}
+
+			function renderContributionGraph(data: ContributionData): string {
+				return data.weeks.map(week => `
+					<div class="week-column">
+						${week.contribution_days.map(day => `
+							<div class="contribution-day" 
+								 style="background-color: ${day.color};" 
+								 title="${day.date}: ${day.count} contributions">
+							</div>
+						`).join('')}
+					</div>
+				`).join('');
+			}
+
+			function renderUserSection(username: string, data: ContributionData): string {
+				return `
+					<div class="user-section">
+						<div class="user-header">
+							<div class="user-name">👤 ${username}</div>
+							<div class="user-stats">
+								Total Contributions: ${data.total_contributions.toLocaleString()}<br>
+								Period: ${data.from} to ${data.to}
+							</div>
+						</div>
+						<div class="contribution-graph">
+							${renderContributionGraph(data)}
+						</div>
+					</div>
+				`;
+			}
+
+			async function compare() {
+				const user1Input = document.getElementById('user1') as HTMLInputElement;
+				const user2Input = document.getElementById('user2') as HTMLInputElement;
+				const results = document.getElementById('results')!;
+				const compareBtn = document.getElementById('compareBtn') as HTMLButtonElement;
+
+				const user1 = user1Input.value.trim();
+				const user2 = user2Input.value.trim();
+
+				if (!user1 || !user2) {
+					results.innerHTML = '<div class="error">⚠️ Please enter both usernames! ⚠️</div>';
+					return;
+				}
+
+				compareBtn.disabled = true;
+				results.innerHTML = '<div class="loading">⚡ Loading battle data... ⚡</div>';
+
+				try {
+					const [data1, data2] = await Promise.all([
+						fetchContributions(user1),
+						fetchContributions(user2)
+					]);
+
+					results.innerHTML = `
+						<div class="vs-badge">VS</div>
+						<div class="comparison-area">
+							${renderUserSection(user1, data1)}
+							${renderUserSection(user2, data2)}
+						</div>
+					`;
+				} catch (error) {
+					results.innerHTML = `
+						<div class="error">
+							💥 ERROR 💥<br><br>
+							${error instanceof Error ? error.message : 'Failed to fetch contribution data'}<br>
+							Please check the usernames and try again!
+						</div>
+					`;
+				} finally {
+					compareBtn.disabled = false;
+				}
+			}
+
+			document.getElementById('compareBtn')?.addEventListener('click', compare);
+			
+			// Allow Enter key to trigger comparison
+			document.getElementById('user1')?.addEventListener('keypress', (e) => {
+				if (e.key === 'Enter') compare();
+			});
+			document.getElementById('user2')?.addEventListener('keypress', (e) => {
+				if (e.key === 'Enter') compare();
+			});
+		</script>
+	</body>
+</html>
