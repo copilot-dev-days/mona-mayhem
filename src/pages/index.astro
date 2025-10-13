@@ -513,9 +513,10 @@ interface ContributionData {
 			}
 
 			async function fetchContributions(username: string): Promise<ContributionData> {
-				const response = await fetch(`https://github.com/${username}.contribs`);
+				const response = await fetch(`/api/contributions/${username}`);
 				if (!response.ok) {
-					throw new Error(`Failed to fetch contributions for ${username}`);
+					const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
+					throw new Error(errorData.error || `Failed to fetch contributions for ${username}`);
 				}
 				return response.json();
 			}
