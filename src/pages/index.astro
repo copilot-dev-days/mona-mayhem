@@ -1,5 +1,6 @@
 ---
 interface ContributionData {
+	schema: string;
 	generated_at: string;
 	from: string;
 	to: string;
@@ -8,15 +9,12 @@ interface ContributionData {
 		index: number;
 		first_day: string;
 		contribution_days: {
-			date: string;
 			weekday: number;
 			count: number;
-			color: string;
 			level: number;
 		}[];
 	}[];
-	colors: string[];
-	zero_color: string;
+	colors_full: string[];
 }
 ---
 
@@ -483,6 +481,7 @@ interface ContributionData {
 
 		<script>
 			interface ContributionData {
+				schema: string;
 				generated_at: string;
 				from: string;
 				to: string;
@@ -491,15 +490,12 @@ interface ContributionData {
 					index: number;
 					first_day: string;
 					contribution_days: {
-						date: string;
 						weekday: number;
 						count: number;
-						color: string;
 						level: number;
 					}[];
 				}[];
-				colors: string[];
-				zero_color: string;
+				colors_full: string[];
 			}
 
 			async function fetchContributions(username: string): Promise<ContributionData> {
@@ -512,16 +508,25 @@ interface ContributionData {
 			}
 
 			function renderContributionGraph(data: ContributionData): string {
-				return data.weeks.map(week => `
+				return data.weeks.map(week => {
+					const firstDay = new Date(week.first_day);
+					return `
 					<div class="week-column">
-						${week.contribution_days.map(day => `
+						${week.contribution_days.map(day => {
+							const dayDate = new Date(firstDay);
+							dayDate.setDate(firstDay.getDate() + day.weekday);
+							const dateStr = dayDate.toISOString().split('T')[0];
+							const color = data.colors_full[day.level];
+							return `
 							<div class="contribution-day" 
-								 style="background-color: ${day.color};" 
-								 title="${day.date}: ${day.count} contributions">
+								 style="background-color: ${color};" 
+								 title="${dateStr}: ${day.count} contributions">
 							</div>
-						`).join('')}
+						`;
+						}).join('')}
 					</div>
-				`).join('');
+				`;
+				}).join('');
 			}
 
 			function renderUserSection(username: string, data: ContributionData): string {
