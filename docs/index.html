@@ -7,24 +7,29 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="light-theme.css">
+    <script src="theme-toggle.js"></script>
 </head>
 <body>
+    <div style="position:fixed;top:1rem;right:1rem;z-index:1000;">
+        <button class="theme-toggle" onclick="toggleTheme()">☀️ Light</button>
+    </div>
     <section class="hero">
         <div class="container">
-            <div class="hero-badge">🎮 Build a GitHub Contribution Battle Arena</div>
+            <div class="hero-badge">🎮 VS Code GitHub Copilot Workshop</div>
             <h1>Mona Mayhem Workshop</h1>
-            <p class="hero-subtitle">Build a retro arcade-themed web app from scratch using GitHub Copilot. Learn full-stack development with Astro, API integration, CSS animations, and AI-assisted coding.</p>
+            <p class="hero-subtitle">Build a retro arcade GitHub Contribution Battle Arena while mastering VS Code Copilot features: context engineering, Plan Mode, Agent Mode, design-first development, and multi-agent workflows.</p>
             <div class="hero-cta">
                 <a href="step.html?step=00-overview" class="btn btn-primary">🚀 Start Workshop</a>
                 <a href="https://github.com/copilot-dev-days/mona-mayhem" class="btn btn-secondary" target="_blank">⭐ GitHub Repo</a>
             </div>
             <div class="stats">
                 <div class="stat">
-                    <div class="stat-value">~90min</div>
+                    <div class="stat-value">~60min</div>
                     <div class="stat-label">Duration</div>
                 </div>
                 <div class="stat">
-                    <div class="stat-value">8</div>
+                    <div class="stat-value">7</div>
                     <div class="stat-label">Parts</div>
                 </div>
                 <div class="stat">
@@ -40,24 +45,24 @@
             <h2 class="section-title">What You'll Learn</h2>
             <div class="features-grid">
                 <div class="feature-card">
+                    <div class="feature-icon">🧠</div>
+                    <h3>Context Engineering</h3>
+                    <p>Teach Copilot about your codebase with workspace instructions, background agents, and Ask mode exploration.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📋</div>
+                    <h3>Plan Mode</h3>
+                    <p>Design architecture before coding — iterate on plans until they're right, then implement with confidence.</p>
+                </div>
+                <div class="feature-card">
                     <div class="feature-icon">🤖</div>
-                    <h3>Copilot Agent Mode</h3>
-                    <p>Use GitHub Copilot's Agent Mode to scaffold, build, and iterate on a full-stack web application.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">⚡</div>
-                    <h3>Full-Stack Astro</h3>
-                    <p>Create an Astro project with SSR, API routes, TypeScript, and dynamic server-side rendering.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🔌</div>
-                    <h3>API Integration</h3>
-                    <p>Build a server-side proxy to fetch GitHub contribution data and handle CORS restrictions.</p>
+                    <h3>Agent Mode</h3>
+                    <p>Let Copilot scaffold entire features autonomously across multiple files, then iterate with feedback.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">🎨</div>
-                    <h3>Retro CSS Animations</h3>
-                    <p>Design a neon arcade theme with scanlines, glowing effects, and animated transitions.</p>
+                    <h3>Multi-Agent Workflows</h3>
+                    <p>Use background and cloud agents for parallel polish — responsive design, error UX, theme variations.</p>
                 </div>
             </div>
         </div>
@@ -78,56 +83,48 @@
                 <a href="step.html?step=01-setup" class="part-card">
                     <div class="part-number">01</div>
                     <div class="part-content">
-                        <h3>Project Setup</h3>
-                        <p>Create an Astro project with SSR</p>
+                        <h3>Setup & Context Engineering</h3>
+                        <p>Clone, configure, teach AI about the project</p>
                     </div>
-                    <span class="part-time">10 min</span>
+                    <span class="part-time">15 min</span>
                 </a>
-                <a href="step.html?step=02-api-route" class="part-card">
+                <a href="step.html?step=02-plan-and-scaffold" class="part-card">
                     <div class="part-number">02</div>
                     <div class="part-content">
-                        <h3>API Route</h3>
-                        <p>Build the GitHub contributions proxy</p>
+                        <h3>Plan & Scaffold</h3>
+                        <p>Design API and page architecture with Plan Mode</p>
                     </div>
                     <span class="part-time">15 min</span>
                 </a>
-                <a href="step.html?step=03-battle-page" class="part-card">
+                <a href="step.html?step=03-agent-mode" class="part-card">
                     <div class="part-number">03</div>
                     <div class="part-content">
-                        <h3>Battle Page</h3>
-                        <p>Create the main page with inputs</p>
+                        <h3>Agent Mode: Build the Game</h3>
+                        <p>Build battle page and contribution graphs</p>
                     </div>
                     <span class="part-time">10 min</span>
                 </a>
-                <a href="step.html?step=04-contribution-graph" class="part-card">
+                <a href="step.html?step=04-design-vibes" class="part-card">
                     <div class="part-number">04</div>
                     <div class="part-content">
-                        <h3>Contribution Graph</h3>
-                        <p>Fetch and visualize data</p>
-                    </div>
-                    <span class="part-time">15 min</span>
-                </a>
-                <a href="step.html?step=05-retro-theme" class="part-card">
-                    <div class="part-number">05</div>
-                    <div class="part-content">
-                        <h3>Retro Theme</h3>
-                        <p>Add arcade-style neon effects</p>
-                    </div>
-                    <span class="part-time">15 min</span>
-                </a>
-                <a href="step.html?step=06-polish" class="part-card">
-                    <div class="part-number">06</div>
-                    <div class="part-content">
-                        <h3>Polish & Deploy</h3>
-                        <p>Responsive design and production build</p>
+                        <h3>Design-First Theming</h3>
+                        <p>Retro arcade transformation with Plan + Agent</p>
                     </div>
                     <span class="part-time">10 min</span>
                 </a>
-                <a href="step.html?step=07-bonus" class="part-card">
-                    <div class="part-number">🏆</div>
+                <a href="step.html?step=05-polish" class="part-card">
+                    <div class="part-number">05</div>
                     <div class="part-content">
-                        <h3>Bonus Challenges</h3>
-                        <p>Extend with new features</p>
+                        <h3>Polish & Multi-Agent</h3>
+                        <p>Background agents for responsive fixes and design variations</p>
+                    </div>
+                    <span class="part-time">10 min</span>
+                </a>
+                <a href="step.html?step=06-bonus" class="part-card">
+                    <div class="part-number">🎉</div>
+                    <div class="part-content">
+                        <h3>Bonus & Extensions</h3>
+                        <p>Open-ended challenges and MCP integration</p>
                     </div>
                     <span class="part-time">15+ min</span>
                 </a>

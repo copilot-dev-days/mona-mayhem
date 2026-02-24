@@ -276,11 +276,14 @@
             .main { padding: 1.5rem; }
         }
     </style>
+    <link rel="stylesheet" href="light-theme.css">
+    <script src="theme-toggle.js"></script>
 </head>
 <body>
     <header class="header">
         <a href="index.html" class="header-brand">🎮 Mona Mayhem Workshop</a>
         <div class="header-nav">
+            <button class="theme-toggle" onclick="toggleTheme()">☀️ Light</button>
             <button class="nav-btn" id="prevBtn" onclick="navigatePrev()" disabled>← Prev</button>
             <button class="nav-btn" id="nextBtn" onclick="navigateNext()" disabled>Next →</button>
         </div>
@@ -304,13 +307,12 @@
     <script>
         const steps = [
             { id: '00-overview', file: 'workshop/00-overview.md', title: 'Overview', number: '00' },
-            { id: '01-setup', file: 'workshop/01-setup.md', title: 'Project Setup', number: '01' },
-            { id: '02-api-route', file: 'workshop/02-api-route.md', title: 'API Route', number: '02' },
-            { id: '03-battle-page', file: 'workshop/03-battle-page.md', title: 'Battle Page', number: '03' },
-            { id: '04-contribution-graph', file: 'workshop/04-contribution-graph.md', title: 'Contribution Graph', number: '04' },
-            { id: '05-retro-theme', file: 'workshop/05-retro-theme.md', title: 'Retro Theme', number: '05' },
-            { id: '06-polish', file: 'workshop/06-polish.md', title: 'Polish & Deploy', number: '06' },
-            { id: '07-bonus', file: 'workshop/07-bonus.md', title: 'Bonus Challenges', number: '🏆' },
+            { id: '01-setup', file: 'workshop/01-setup.md', title: 'Setup & Context Engineering', number: '01' },
+            { id: '02-plan-and-scaffold', file: 'workshop/02-plan-and-scaffold.md', title: 'Plan & Scaffold', number: '02' },
+            { id: '03-agent-mode', file: 'workshop/03-agent-mode.md', title: 'Agent Mode: Build the Game', number: '03' },
+            { id: '04-design-vibes', file: 'workshop/04-design-vibes.md', title: 'Design-First Theming', number: '04' },
+            { id: '05-polish', file: 'workshop/05-polish.md', title: 'Polish & Multi-Agent', number: '05' },
+            { id: '06-bonus', file: 'workshop/06-bonus.md', title: 'Bonus & Extensions', number: '🎉' },
         ];
 
         const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:';
@@ -384,10 +386,10 @@
             });
 
             // Convert internal .md links to step.html links
-            steps.forEach(s => {
-                const regex = new RegExp(`\\(${s.file.replace('.', '\\.')}\\)`, 'g');
-                md = md.replace(regex, `(step.html?step=${s.id})`);
-            });
+            md = md.replace(/\]\((\d{2}-[\w-]+)\.md\)/g, '](step.html?step=$1)');
+
+            // Strip header nav lines (e.g., "[← Overview](00-overview.md)")
+            md = md.replace(/^\[←[^\]]*\]\([^)]*\)\s*$/gm, '');
 
             return md;
         }
