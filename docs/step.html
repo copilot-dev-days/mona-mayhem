@@ -419,6 +419,14 @@
                 if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
                 let md = await resp.text();
                 md = processMarkdown(md);
+
+                // Fix relative image paths to resolve against the markdown file's directory
+                const stepDir = step.file.substring(0, step.file.lastIndexOf('/') + 1);
+                md = md.replace(/!\[([^\]]*)\]\((?!https?:\/\/|\/\/)([^)]+)\)/g, (match, alt, path) => {
+                    const cleanPath = path.replace(/^\.\//, '');
+                    return `![${alt}](${GITHUB_RAW_BASE}${stepDir}${cleanPath})`;
+                });
+
                 content.innerHTML = marked.parse(md);
                 content.style.display = 'block';
             } catch (err) {
