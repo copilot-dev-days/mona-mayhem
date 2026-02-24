@@ -1,85 +1,43 @@
-# Mona Mayhem
+# 🎮 Mona Mayhem
 
-⚔️ **GitHub Contribution Battle Arena** ⚔️
+**VS Code GitHub Copilot Workshop** — Build a GitHub Contribution Battle Arena
 
-A retro arcade-themed website built with Astro that allows comparing the GitHub contribution graphs of two GitHub users.
+A retro arcade-themed website built with Astro that allows comparing the GitHub contribution graphs of two GitHub users. This workshop teaches VS Code Copilot features through building this app.
 
 ![Mona Mayhem Screenshot](https://github.com/user-attachments/assets/5eca79e2-cb9f-4e93-aa0d-23666ebde3b7)
 
-## Features
+## 📚 Workshop
 
-- 🎮 Retro arcade-style UI with glowing neon effects
-- 📊 Side-by-side contribution graph comparison
-- ⚡ Real-time data fetching from GitHub
-- 🎨 Color-coded contribution intensity visualization
-- 📱 Responsive design for mobile and desktop
+| Part | Title | Copilot Feature |
+|------|-------|-----------------|
+| [00](workshop/00-overview.md) | Overview | What you'll learn |
+| [01](workshop/01-setup.md) | Setup & Context Engineering | Workspace instructions, background agents |
+| [02](workshop/02-plan-and-scaffold.md) | Plan & Scaffold | Plan Mode |
+| [03](workshop/03-agent-mode.md) | Agent Mode: Build the Game | Agent Mode |
+| [04](workshop/04-design-vibes.md) | Design-First Theming | Plan + Agent Mode |
+| [05](workshop/05-polish.md) | Polish & Multi-Agent | Background & cloud agents |
+| [06](workshop/06-bonus.md) | Bonus & Extensions | Open-ended challenges |
 
-## How to Use
+## 🚀 Quick Start
 
-1. Enter two GitHub usernames in the input fields
-2. Click the "⚡ BATTLE! ⚡" button
-3. View the contribution graphs side by side to compare activity
+1. **Use this template** → Create a new repository
+2. Clone and open in VS Code
+3. Open the Chat panel and type `/setup`
+4. Follow the [workshop guide](workshop/00-overview.md)
 
-## Development
+## Prerequisites
 
-### Prerequisites
-
-- Node.js (v18 or higher)
-- npm
-
-### Installation
-
-```bash
-npm install
-```
-
-### Running the Development Server
-
-```bash
-npm run dev
-```
-
-The application will be available at `http://localhost:4321/`
-
-### Building for Production
-
-```bash
-npm run build
-```
-
-The built files will be in the `dist/` directory.
-
-### Running the Production Server
-
-```bash
-npm run preview
-```
+- VS Code v1.107+
+- GitHub Copilot (Pro, Business, or Enterprise)
+- Node.js 18+
+- Git
 
 ## Technology Stack
 
 - **Framework**: [Astro](https://astro.build/) v5
 - **Runtime**: Node.js with [@astrojs/node](https://docs.astro.build/en/guides/integrations-guide/node/) adapter
 - **Font**: Press Start 2P (retro gaming font)
-- **API**: GitHub's contribution graph API (`https://github.com/{username}.contribs`)
-
-## API
-
-The application uses GitHub's public contribution API endpoint:
-- Endpoint: `https://github.com/{username}.contribs`
-- No authentication required
-- Returns JSON data with contribution counts and colors
-
-## Architecture
-
-The application uses a server-side proxy to fetch GitHub data:
-- Frontend: Static page with JavaScript for interactivity
-- Backend: Astro API route (`/api/contributions/[username]`) that proxies requests to GitHub
-- This architecture bypasses CORS restrictions and allows caching
-
-## Screenshots
-
-### Comparison View
-![Comparison Screenshot](https://github.com/user-attachments/assets/0be40d4d-7f98-49bb-bdab-98a9254eeed6)
+- **API**: GitHub's contribution graph API
 
 ## License
 

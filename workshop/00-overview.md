@@ -1,91 +1,59 @@
-# 🎮 Mona Mayhem Workshop
+# 🎮 Mona Mayhem — VS Code GitHub Copilot Workshop
 
-## Build a GitHub Contribution Battle Arena with Copilot
+[← README](../README.md)
 
-Welcome to the Mona Mayhem workshop! You'll build a retro arcade-themed web application that compares GitHub contribution graphs between two users — all using GitHub Copilot as your AI pair programmer.
+---
 
-## What You'll Build
+> **Duration:** ~1 hour
+> **Level:** Intermediate
+> **Stack:** Astro / Node.js / TypeScript
 
-**Mona Mayhem** is a full-stack web app where users can enter two GitHub usernames and see their contribution activity displayed side-by-side in a neon-lit retro arcade style. Think Street Fighter, but for GitHub contributions! 🕹️
+Build a retro arcade GitHub contribution comparison app — **Mona Mayhem** — while learning the full spectrum of VS Code Copilot features: context engineering, plan mode, agent mode, design-first development, and multi-agent workflows.
 
-### Features
-- ⚡ Real-time GitHub contribution data fetching
-- 📊 Side-by-side contribution graph visualization
-- 🎮 Retro arcade UI with glowing neon effects and animations
-- 🔌 Server-side API proxy to handle CORS
-- 📱 Responsive design for all screen sizes
+---
 
-## Learning Objectives
+## 📋 Quick Checklist
 
-By the end of this workshop, you'll know how to:
+Before you begin, verify:
 
-1. **Use GitHub Copilot Agent Mode** to scaffold and build a full-stack web app
-2. **Create an Astro project** with server-side rendering (SSR)
-3. **Build API routes** with dynamic parameters in Astro
-4. **Integrate with external APIs** (GitHub's contribution data)
-5. **Implement a server-side proxy** pattern for CORS handling
-6. **Create interactive UIs** with vanilla JavaScript and TypeScript
-7. **Design retro-themed interfaces** with CSS animations and effects
-8. **Handle async operations** including loading states, error handling, and parallel requests
+- [ ] VS Code **v1.107+** (no pending updates)
+- [ ] Signed in with **GitHub Copilot** (Pro, Business, or Enterprise)
+- [ ] Node.js **18+** installed
+- [ ] Git installed and configured
+- [ ] Chat panel open and Agent ready
 
-## Tech Stack
+> 💡 **Tip:** Use the DevContainer for a pre-configured environment!
 
-| Component | Technology |
-|-----------|-----------|
-| Framework | [Astro](https://astro.build/) v5 |
-| Runtime | Node.js with `@astrojs/node` adapter |
-| Language | TypeScript |
-| Styling | CSS with animations |
-| Font | Press Start 2P (Google Fonts) |
-| API | GitHub Contributions endpoint |
+---
 
-## Prerequisites
+## 🎯 What You'll Learn
 
-Before starting, make sure you have:
+| # | Skill | Description |
+|---|-------|-------------|
+| 1 | **Context Engineering** | Teach AI about your codebase with instructions |
+| 2 | **Plan Mode** | Design architecture before coding |
+| 3 | **Agent Mode** | Let Copilot scaffold entire features autonomously |
+| 4 | **Design-First Development** | Transform UI with AI-guided theming |
+| 5 | **Multi-Agent Workflows** | Background & cloud agents for parallel work |
 
-- [ ] **VS Code** (v1.107 or later)
-- [ ] **GitHub Copilot** subscription (Individual, Business, or Enterprise) with access to Agent Mode
-- [ ] **Node.js** v18 or higher installed
-- [ ] **npm** package manager
-- [ ] **Git** installed and configured
+---
 
-## Workshop Structure
+## 📚 Lab Parts
 
-This workshop is divided into 7 parts:
+| Part | Title | Description |
+|------|-------|-------------|
+| [**01**](01-setup.md) | Setup & Context Engineering | Clone, configure, teach AI about the project |
+| [**02**](02-plan-and-scaffold.md) | Plan & Scaffold | Design API and page architecture with Plan Mode |
+| [**03**](03-agent-mode.md) | Agent Mode: Build the Game | Build battle page and contribution graphs |
+| [**04**](04-design-vibes.md) | Design-First Theming | Retro arcade transformation with Agent Mode |
+| [**05**](05-polish.md) | Polish & Multi-Agent | Background agents for responsive fixes, cloud agents for variations |
+| [**06**](06-bonus.md) | Bonus & Extensions | Open-ended challenges and MCP integration |
 
-| Part | Title | What You'll Do |
-|------|-------|---------------|
-| 01 | Project Setup | Create an Astro project and configure SSR |
-| 02 | API Route | Build the GitHub contributions proxy API |
-| 03 | Battle Page | Create the main page with username inputs |
-| 04 | Contribution Graph | Fetch and visualize contribution data |
-| 05 | Retro Theme | Add the arcade-style neon theme |
-| 06 | Polish & Deploy | Error handling, responsive design, and deployment |
-| 07 | Bonus Challenges | Extend the app with new features |
+---
 
-## How to Use This Workshop
+## 💡 Pro Tips
 
-Each part includes:
-- **🎯 Goal** — What you'll accomplish
-- **💬 Copilot Prompts** — Exact prompts to use with Copilot Agent Mode
-- **✅ Checkpoint** — How to verify your progress
-- **💡 Tips** — Extra context and explanations
-
-> [!TIP]
-> This workshop is designed to be completed using **GitHub Copilot Agent Mode**. Open the Copilot Chat panel, select Agent Mode, and use the provided prompts. Copilot will do the heavy lifting — your job is to guide it!
-
-## Reference Implementation
-
-If you get stuck or want to compare your work, the completed project is available at:
-
-```bash
-git clone https://github.com/copilot-dev-days/mona-mayhem.git
-```
-
-You can browse the source code to see the finished implementation, but we recommend building it from scratch to get the full learning experience!
-
-## Ready?
-
-Let's build something awesome! 🚀
-
-👉 **[Continue to Part 1: Project Setup →](01-setup.md)**
+1. **Keep the browser open** — Watch live updates as you code
+2. **Commit often** — Save working states frequently
+3. **Use checkpoints** — Revert unexpected changes with chat Checkpoints & Undo
+4. **Iterate on plans 2+ times** — Plans improve with each refinement pass
