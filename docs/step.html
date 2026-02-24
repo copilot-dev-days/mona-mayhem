@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mona Mayhem</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+    <style>
+        :root {
+            --bg-dark: #0a0a0f;
+            --bg-card: #12121a;
+            --bg-code: #1a1a2e;
+            --neon-cyan: #00f5ff;
+            --neon-magenta: #ff00ff;
+            --neon-purple: #b366ff;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b0;
+            --border-color: #2a2a3a;
+            --success-green: #00ff88;
+            --warning-yellow: #ffcc00;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background:
+                linear-gradient(90deg, rgba(0,245,255,0.03) 1px, transparent 1px),
+                linear-gradient(rgba(0,245,255,0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* Header */
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(10,10,15,0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0.75rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        .header-brand:hover { color: var(--neon-cyan); }
+        .header-nav {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .nav-btn {
+            padding: 0.5rem 1rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-primary);
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.875rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        .nav-btn:hover { border-color: var(--neon-cyan); color: var(--neon-cyan); }
+        .nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+        /* Layout */
+        .layout {
+            display: flex;
+            flex: 1;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: var(--bg-card);
+            border-right: 1px solid var(--border-color);
+            padding: 1.5rem 0;
+            overflow-y: auto;
+            position: sticky;
+            top: 52px;
+            height: calc(100vh - 52px);
+            flex-shrink: 0;
+        }
+        .sidebar-title {
+            padding: 0 1.5rem 1rem;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-secondary);
+        }
+        .step-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1.5rem;
+            text-decoration: none;
+            color: var(--text-secondary);
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+        }
+        .step-link:hover {
+            background: rgba(0,245,255,0.05);
+            color: var(--text-primary);
+        }
+        .step-link.active {
+            background: rgba(0,245,255,0.08);
+            color: var(--neon-cyan);
+            border-left-color: var(--neon-cyan);
+        }
+        .step-number {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-dark);
+            border-radius: 8px;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+        .step-link.active .step-number {
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-magenta));
+        }
+        .step-title {
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Main Content */
+        .main {
+            flex: 1;
+            padding: 2rem 3rem;
+            max-width: 900px;
+            min-width: 0;
+        }
+
+        /* Loading Spinner */
+        .loading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem;
+            gap: 1rem;
+        }
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--border-color);
+            border-top-color: var(--neon-cyan);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Markdown Styles */
+        .markdown-body h1 { font-size: 2rem; margin: 2rem 0 1rem; background: linear-gradient(135deg, var(--neon-cyan), var(--neon-magenta)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .markdown-body h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; color: var(--neon-cyan); border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; }
+        .markdown-body h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; }
+        .markdown-body h4 { font-size: 1.1rem; margin: 1.25rem 0 0.5rem; color: var(--neon-purple); }
+        .markdown-body p { margin: 0.75rem 0; color: var(--text-secondary); }
+        .markdown-body a { color: var(--neon-cyan); text-decoration: none; border-bottom: 1px solid transparent; }
+        .markdown-body a:hover { border-bottom-color: var(--neon-cyan); }
+        .markdown-body strong { color: var(--text-primary); }
+        .markdown-body ul, .markdown-body ol { margin: 0.75rem 0; padding-left: 1.5rem; color: var(--text-secondary); }
+        .markdown-body li { margin: 0.35rem 0; }
+        .markdown-body li::marker { color: var(--neon-cyan); }
+        .markdown-body code {
+            font-family: 'JetBrains Mono', monospace;
+            background: var(--bg-code);
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.875em;
+            color: var(--neon-magenta);
+        }
+        .markdown-body pre {
+            background: var(--bg-code);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.25rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        .markdown-body pre code {
+            background: none;
+            padding: 0;
+            color: var(--text-primary);
+            font-size: 0.85rem;
+        }
+        .markdown-body blockquote {
+            border-left: 3px solid var(--neon-purple);
+            padding: 0.75rem 1rem;
+            margin: 1rem 0;
+            background: rgba(179,102,255,0.05);
+            border-radius: 0 8px 8px 0;
+        }
+        .markdown-body blockquote p { color: var(--text-secondary); margin: 0; }
+        .markdown-body img { max-width: 100%; border-radius: 8px; margin: 1rem 0; }
+        .markdown-body table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+        .markdown-body th, .markdown-body td { padding: 0.75rem 1rem; border: 1px solid var(--border-color); text-align: left; }
+        .markdown-body th { background: var(--bg-code); color: var(--neon-cyan); font-weight: 600; }
+        .markdown-body td { color: var(--text-secondary); }
+        .markdown-body tr:hover td { background: rgba(0,245,255,0.03); }
+        .markdown-body hr { border: none; border-top: 1px solid var(--border-color); margin: 2rem 0; }
+        .markdown-body input[type="checkbox"] { margin-right: 0.5rem; accent-color: var(--neon-cyan); }
+
+        /* GitHub Alerts */
+        .alert { padding: 1rem 1.25rem; border-radius: 8px; margin: 1rem 0; border-left: 4px solid; }
+        .alert-note { background: rgba(0,245,255,0.05); border-color: var(--neon-cyan); }
+        .alert-tip { background: rgba(0,255,136,0.05); border-color: var(--success-green); }
+        .alert-important { background: rgba(179,102,255,0.05); border-color: var(--neon-purple); }
+        .alert-warning { background: rgba(255,204,0,0.05); border-color: var(--warning-yellow); }
+        .alert-caution { background: rgba(255,0,255,0.05); border-color: var(--neon-magenta); }
+        .alert-title { font-weight: 700; margin-bottom: 0.25rem; display: flex; align-items: center; gap: 0.5rem; }
+        .alert-note .alert-title { color: var(--neon-cyan); }
+        .alert-tip .alert-title { color: var(--success-green); }
+        .alert-important .alert-title { color: var(--neon-purple); }
+        .alert-warning .alert-title { color: var(--warning-yellow); }
+        .alert-caution .alert-title { color: var(--neon-magenta); }
+
+        /* Footer Nav */
+        .footer-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+        .footer-nav-btn {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            padding: 1rem 1.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+            max-width: 45%;
+        }
+        .footer-nav-btn:hover { border-color: var(--neon-cyan); transform: translateY(-2px); }
+        .footer-nav-btn .label { font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; }
+        .footer-nav-btn .title { font-weight: 600; color: var(--neon-cyan); }
+
+        @media (max-width: 768px) {
+            .sidebar { display: none; }
+            .main { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a href="index.html" class="header-brand">🎮 Mona Mayhem</a>
+        <div class="header-nav">
+            <button class="nav-btn" id="prevBtn" onclick="navigatePrev()" disabled>← Prev</button>
+            <button class="nav-btn" id="nextBtn" onclick="navigateNext()" disabled>Next →</button>
+        </div>
+    </header>
+
+    <div class="layout">
+        <nav class="sidebar" id="sidebar"></nav>
+        <main class="main">
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <span style="color: var(--text-secondary);">Loading content...</span>
+            </div>
+            <article class="markdown-body" id="content" style="display:none;"></article>
+            <div class="footer-nav" id="footerNav" style="display:none;">
+                <div id="footerPrev"></div>
+                <div id="footerNext"></div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const steps = [
+            { id: 'readme', file: 'README.md', title: 'Project Guide', number: '📚' },
+        ];
+
+        const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:';
+        const GITHUB_RAW_BASE = isLocal ? '../' : 'https://raw.githubusercontent.com/copilot-dev-days/mona-mayhem/main/';
+        const DEFAULT_STEP = 'readme';
+
+        let currentIndex = 0;
+
+        function getStepFromURL() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('step') || DEFAULT_STEP;
+        }
+
+        function buildSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const html = `<div class="sidebar-title">Workshop Steps</div>` +
+                steps.map((s, i) => `
+                    <a href="?step=${s.id}" class="step-link ${i === currentIndex ? 'active' : ''}" data-index="${i}">
+                        <span class="step-number">${s.number}</span>
+                        <span class="step-title">${s.title}</span>
+                    </a>
+                `).join('');
+            sidebar.innerHTML = html;
+        }
+
+        function updateNav() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            prevBtn.disabled = currentIndex <= 0;
+            nextBtn.disabled = currentIndex >= steps.length - 1;
+
+            const footerNav = document.getElementById('footerNav');
+            const footerPrev = document.getElementById('footerPrev');
+            const footerNext = document.getElementById('footerNext');
+            footerNav.style.display = 'flex';
+
+            if (currentIndex > 0) {
+                const prev = steps[currentIndex - 1];
+                footerPrev.innerHTML = `<a href="?step=${prev.id}" class="footer-nav-btn"><span class="label">← Previous</span><span class="title">${prev.title}</span></a>`;
+            } else {
+                footerPrev.innerHTML = '';
+            }
+
+            if (currentIndex < steps.length - 1) {
+                const next = steps[currentIndex + 1];
+                footerNext.innerHTML = `<a href="?step=${next.id}" class="footer-nav-btn" style="text-align:right;margin-left:auto;"><span class="label">Next →</span><span class="title">${next.title}</span></a>`;
+            } else {
+                footerNext.innerHTML = '';
+            }
+        }
+
+        function navigatePrev() {
+            if (currentIndex > 0) {
+                window.location.href = `?step=${steps[currentIndex - 1].id}`;
+            }
+        }
+
+        function navigateNext() {
+            if (currentIndex < steps.length - 1) {
+                window.location.href = `?step=${steps[currentIndex + 1].id}`;
+            }
+        }
+
+        function processMarkdown(md) {
+            // Convert GitHub alerts
+            md = md.replace(/> \[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\n((?:> .*\n?)*)/gi, (match, type, content) => {
+                const alertType = type.toLowerCase();
+                const icons = { note: 'ℹ️', tip: '💡', important: '❗', warning: '⚠️', caution: '🔥' };
+                const cleanContent = content.replace(/^> ?/gm, '').trim();
+                return `<div class="alert alert-${alertType}"><div class="alert-title">${icons[alertType] || ''} ${type}</div><p>${cleanContent}</p></div>\n`;
+            });
+
+            // Convert internal .md links to step.html links
+            steps.forEach(s => {
+                const regex = new RegExp(`\\(${s.file.replace('.', '\\.')}\\)`, 'g');
+                md = md.replace(regex, `(step.html?step=${s.id})`);
+            });
+
+            return md;
+        }
+
+        async function loadStep(stepId) {
+            const index = steps.findIndex(s => s.id === stepId);
+            if (index === -1) {
+                currentIndex = 0;
+            } else {
+                currentIndex = index;
+            }
+
+            const step = steps[currentIndex];
+            document.title = `${step.title} - Mona Mayhem`;
+
+            buildSidebar();
+            updateNav();
+
+            const loading = document.getElementById('loading');
+            const content = document.getElementById('content');
+            loading.style.display = 'flex';
+            content.style.display = 'none';
+
+            try {
+                const url = GITHUB_RAW_BASE + step.file;
+                const resp = await fetch(url);
+                if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+                let md = await resp.text();
+                md = processMarkdown(md);
+                content.innerHTML = marked.parse(md);
+                content.style.display = 'block';
+            } catch (err) {
+                content.innerHTML = `<div class="alert alert-warning"><div class="alert-title">⚠️ Error</div><p>Failed to load content: ${err.message}</p></div>`;
+                content.style.display = 'block';
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') navigatePrev();
+            if (e.key === 'ArrowRight') navigateNext();
+        });
+
+        // Konami code easter egg
+        const konamiCode = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
+        let konamiIndex = 0;
+        document.addEventListener('keydown', (e) => {
+            if (e.key === konamiCode[konamiIndex]) {
+                konamiIndex++;
+                if (konamiIndex === konamiCode.length) {
+                    konamiIndex = 0;
+                    if (typeof confetti === 'function') {
+                        confetti({ particleCount: 200, spread: 70, origin: { y: 0.6 } });
+                        setTimeout(() => confetti({ particleCount: 100, angle: 60, spread: 55, origin: { x: 0 } }), 250);
+                        setTimeout(() => confetti({ particleCount: 100, angle: 120, spread: 55, origin: { x: 1 } }), 400);
+                    }
+                }
+            } else {
+                konamiIndex = 0;
+            }
+        });
+
+        // Init
+        loadStep(getStepFromURL());
+    </script>
+</body>
+</html>
