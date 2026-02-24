@@ -1,7 +1,5 @@
 # 🎮 Mona Mayhem — VS Code GitHub Copilot Workshop
 
-[← README](../README.md)
-
 ---
 
 > **Duration:** ~1 hour

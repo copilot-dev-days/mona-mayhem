@@ -1,7 +1,5 @@
 # Part 5: Polish & Multi-Agent
 
-[← Part 4](04-design-vibes.md)
-
 ---
 
 Now that the app works and looks great, it's time to polish. Instead of doing everything sequentially, you'll hand off polish tasks to **background and cloud agents** that work in parallel — letting you review results as they come in.

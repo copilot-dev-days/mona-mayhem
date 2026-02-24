@@ -1,7 +1,5 @@
 # Part 2: Plan & Scaffold
 
-[← Part 1](01-setup.md)
-
 ---
 
 Before writing any code, let's use **Plan Mode** to think through the architecture. Planning first helps you design better systems and gives Copilot the context it needs to generate higher-quality code.

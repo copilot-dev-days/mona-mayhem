@@ -1,7 +1,5 @@
 # 🎉 Bonus & Extensions
 
-[← Part 5](05-polish.md)
-
 ---
 
 You've built a fully functional GitHub Battle app! Now it's time to push further with **open-ended challenges**. Use **Agent Mode** for all of these — describe what you want, and let Copilot help you build it.

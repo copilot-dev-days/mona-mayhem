@@ -1,7 +1,5 @@
 # Part 4: Design-First Theming
 
-[← Part 3](03-agent-mode.md)
-
 ---
 
 In this part, you'll use **Plan Mode** to design a comprehensive theme transformation, then **Agent Mode** to implement it. This is design-first development — start with the vision, iterate on the visuals, and let Copilot handle the CSS heavy lifting.

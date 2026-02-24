@@ -1,7 +1,5 @@
 # Part 3: Agent Mode — Build the Game
 
-[← Part 2](02-plan-and-scaffold.md)
-
 ---
 
 Agent Mode lets Copilot autonomously plan and implement changes across multiple files. Instead of writing code line by line, you describe what you want and Copilot figures out which files to create or modify, then implements everything end to end.
