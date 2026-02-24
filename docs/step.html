@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mona Mayhem</title>
+    <title>Mona Mayhem Workshop</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -279,7 +279,7 @@
 </head>
 <body>
     <header class="header">
-        <a href="index.html" class="header-brand">🎮 Mona Mayhem</a>
+        <a href="index.html" class="header-brand">🎮 Mona Mayhem Workshop</a>
         <div class="header-nav">
             <button class="nav-btn" id="prevBtn" onclick="navigatePrev()" disabled>← Prev</button>
             <button class="nav-btn" id="nextBtn" onclick="navigateNext()" disabled>Next →</button>
@@ -303,12 +303,19 @@
 
     <script>
         const steps = [
-            { id: 'readme', file: 'README.md', title: 'Project Guide', number: '📚' },
+            { id: '00-overview', file: 'workshop/00-overview.md', title: 'Overview', number: '00' },
+            { id: '01-setup', file: 'workshop/01-setup.md', title: 'Project Setup', number: '01' },
+            { id: '02-api-route', file: 'workshop/02-api-route.md', title: 'API Route', number: '02' },
+            { id: '03-battle-page', file: 'workshop/03-battle-page.md', title: 'Battle Page', number: '03' },
+            { id: '04-contribution-graph', file: 'workshop/04-contribution-graph.md', title: 'Contribution Graph', number: '04' },
+            { id: '05-retro-theme', file: 'workshop/05-retro-theme.md', title: 'Retro Theme', number: '05' },
+            { id: '06-polish', file: 'workshop/06-polish.md', title: 'Polish & Deploy', number: '06' },
+            { id: '07-bonus', file: 'workshop/07-bonus.md', title: 'Bonus Challenges', number: '🏆' },
         ];
 
         const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:';
         const GITHUB_RAW_BASE = isLocal ? '../' : 'https://raw.githubusercontent.com/copilot-dev-days/mona-mayhem/main/';
-        const DEFAULT_STEP = 'readme';
+        const DEFAULT_STEP = '00-overview';
 
         let currentIndex = 0;
 
@@ -319,7 +326,7 @@
 
         function buildSidebar() {
             const sidebar = document.getElementById('sidebar');
-            const html = `<div class="sidebar-title">Workshop Steps</div>` +
+            const html = `<div class="sidebar-title">Workshop Parts</div>` +
                 steps.map((s, i) => `
                     <a href="?step=${s.id}" class="step-link ${i === currentIndex ? 'active' : ''}" data-index="${i}">
                         <span class="step-number">${s.number}</span>
@@ -394,7 +401,7 @@
             }
 
             const step = steps[currentIndex];
-            document.title = `${step.title} - Mona Mayhem`;
+            document.title = `${step.title} - Mona Mayhem Workshop`;
 
             buildSidebar();
             updateNav();
