@@ -74,6 +74,16 @@ Each part includes:
 > [!TIP]
 > This workshop is designed to be completed using **GitHub Copilot Agent Mode**. Open the Copilot Chat panel, select Agent Mode, and use the provided prompts. Copilot will do the heavy lifting — your job is to guide it!
 
+## Reference Implementation
+
+If you get stuck or want to compare your work, the completed project is available at:
+
+```bash
+git clone https://github.com/copilot-dev-days/mona-mayhem.git
+```
+
+You can browse the source code to see the finished implementation, but we recommend building it from scratch to get the full learning experience!
+
 ## Ready?
 
 Let's build something awesome! 🚀
