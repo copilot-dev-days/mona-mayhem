@@ -66,6 +66,8 @@
 
         const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:';
         const GITHUB_RAW_BASE = isLocal ? '../' : 'https://raw.githubusercontent.com/copilot-dev-days/mona-mayhem/main/';
+        const STEP_ID_PATTERN = /^[a-z0-9-]{1,64}$/;
+        const WHITESPACE_NORMALIZE_PATTERN = /[\s\n]+/g;
 
         let currentIndex = 0;
 
@@ -135,7 +137,8 @@
             const checkboxes = Array.from(markdown.querySelectorAll('input[type="checkbox"]'));
             if (!checkboxes.length) return;
 
-            const sanitizedStepId = encodeURIComponent(stepId);
+            const normalizedStepId = STEP_ID_PATTERN.test(stepId) ? stepId : 'unknown-step';
+            const sanitizedStepId = encodeURIComponent(normalizedStepId);
             const storageKey = `mona-mayhem-workshop-checks:${sanitizedStepId}`;
             let savedStates = [];
 
@@ -162,7 +165,7 @@
                     if (clonedCheckbox) {
                         clonedCheckbox.remove();
                     }
-                    itemText = (listItemClone.textContent || '').replace(/[\s\n]+/g, ' ').trim();
+                    itemText = (listItemClone.textContent || '').replace(WHITESPACE_NORMALIZE_PATTERN, ' ').trim();
                 }
                 const ariaLabel = itemText ? `Checklist item: ${itemText}` : `Workshop task ${index + 1}`;
                 checkbox.setAttribute('aria-label', ariaLabel);
