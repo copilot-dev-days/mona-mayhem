@@ -263,7 +263,7 @@
                     await navigator.clipboard.writeText(text);
                     return;
                 } catch (error) {
-                    console.warn('Clipboard API copy failed, falling back to document copy command.', error);
+                    console.warn('Clipboard API failed, attempting fallback method.', error);
                 }
             }
 
@@ -279,7 +279,7 @@
             try {
                 const successful = document.execCommand('copy');
                 if (!successful) {
-                    throw new Error('Browser copy command was blocked or unavailable.');
+                    throw new Error('document.execCommand("copy") failed or was blocked by the browser.');
                 }
             } finally {
                 document.body.removeChild(textarea);
@@ -340,7 +340,12 @@
 
                 copyButton.addEventListener('click', async () => {
                     try {
-                        await copyCodeText(codeBlock.textContent || '');
+                        const codeText = codeBlock.textContent || '';
+                        if (!codeText.trim()) {
+                            throw new Error('Code block is empty.');
+                        }
+
+                        await copyCodeText(codeText);
                         updateCopyButtonState(copyButton, 'Copied!', 'is-copied', 'Copied code block');
                     } catch (error) {
                         console.error('Failed to copy code to clipboard:', error);
