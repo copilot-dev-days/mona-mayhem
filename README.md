@@ -2,13 +2,14 @@
 
 **VS Code & GitHub Copilot CLI Workshop** — Build a GitHub Contribution Battle Arena
 
-A retro arcade-themed website built with Astro that allows comparing the GitHub contribution graphs of two GitHub users. This workshop teaches GitHub Copilot workflows through building the app, and the deployed docs now support both a **VS Code** track and a **GitHub Copilot CLI** track.
+A workshop template for building a retro arcade-themed website with Astro that compares GitHub contribution graphs of two users. This is the **starting point** — you'll build the app step by step using GitHub Copilot.
 
 ![Mona Mayhem Screenshot](https://github.com/user-attachments/assets/5eca79e2-cb9f-4e93-aa0d-23666ebde3b7)
+*What you'll build by the end of the workshop*
 
 ## 📚 Workshop
 
-Use the deployed docs toggle to swap between the two versions of the workshop:
+The workshop supports two tracks — follow the one that matches your preferred workflow:
 
 - **VS Code track** — Chat, Plan Mode, Agent Mode, background agents, and editor-native review loops
 - **CLI track** — `copilot`, `@file` context, `/plan`, autonomous edits, `/fleet`, `/delegate`, and `/review`
@@ -31,8 +32,7 @@ Use the deployed docs toggle to swap between the two versions of the workshop:
 2. Choose your workshop path:
    - **VS Code:** clone your repo and open it in VS Code.
    - **GitHub Copilot CLI:** clone your repo locally, install `copilot`, and work from your terminal.
-3. Open the deployed docs and choose **VS Code** or **CLI** with the toggle at the top.
-4. Follow the [workshop guide](workshop/00-overview.md)
+3. Follow the [workshop guide](workshop/00-overview.md)
 
 ## Prerequisites
 

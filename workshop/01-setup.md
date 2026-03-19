@@ -14,13 +14,8 @@ In this part you'll set up your development environment **and** teach Copilot ab
    - forking the repository.
 3. Name it `my-mona-mayhem` and set visibility to **Public** (if you created from template)
 
-### Step 2: Enable GitHub Pages
-
-1. Go to your new repository's **Settings** → **Pages**
-2. Under **Source**, select **GitHub Actions**
-
 <!-- track:vscode:start -->
-### Step 3: Choose Your Development Environment
+### Step 2: Choose Your Development Environment
 
 #### Option A: Local VS Code
 
@@ -34,7 +29,7 @@ In this part you'll set up your development environment **and** teach Copilot ab
 2. Click **Code** → **Codespaces** → **Create codespace on main**
 3. Wait for the environment to boot and dependencies to install
 
-### Step 4: Install Dependencies and Start the App
+### Step 3: Install Dependencies and Start the App
 
 1. Open the integrated terminal in your repository.
 2. Install dependencies:
@@ -53,7 +48,7 @@ In this part you'll set up your development environment **and** teach Copilot ab
 <!-- track:vscode:end -->
 
 <!-- track:cli:start -->
-### Step 3: Install GitHub Copilot CLI
+### Step 2: Install GitHub Copilot CLI
 
 Use the installation path that matches your machine:
 
@@ -75,7 +70,7 @@ Use the installation path that matches your machine:
   winget install GitHub.Copilot
   ```
 
-### Step 4: Start the App and Authenticate the CLI
+### Step 3: Start the App and Authenticate the CLI
 
 1. Clone your repo locally and open a terminal in the project root.
 2. Install dependencies and start the app:
@@ -107,22 +102,24 @@ Use the installation path that matches your machine:
 Context engineering is how you teach AI about your codebase. The better the context, the better every future response will be.
 
 <!-- track:vscode:start -->
-### Task 1: Generate Workspace Instructions
+### Task 1: Enhance Workspace Instructions with /init
 
-1. Open the Command Palette and run:
+The repo already includes a minimal `.github/copilot-instructions.md` with the basics. Let's use the built-in `/init` command to enrich it:
+
+1. Open **Copilot Chat** and type:
 
    ```
-   Chat: Generate Workspace Instructions File
+   /init
    ```
 
-2. Review the generated file — it's probably too detailed.
-3. In Copilot Chat, follow up with:
+2. Review the generated updates — Copilot will analyze your project and suggest improvements to the instructions file.
+3. Accept the changes, then review the result. Make sure it includes:
+   - A mandatory development checklist (`npm run build`, `npm run dev`)
+   - The project overview and tech stack
+   - Coding conventions
+4. **Commit** the updated instructions file.
 
-   > "Compress down by half and add a mandatory development checklist (lint, build, test) to the top"
-
-4. **Commit** the instructions file.
-
-> **Result:** All future Copilot requests now have a basic map of your workspace baked in.
+> **Result:** All future Copilot requests now have a richer map of your workspace baked in.
 
 ### Task 2: Background Agents
 
@@ -148,21 +145,31 @@ Context engineering is how you teach AI about your codebase. The better the cont
 Open **Copilot Chat** in **Ask mode** and try these prompts:
 
 - `"Explain the architecture of this project"`
-- `"What does the API route do?"`
-- `"How does the contribution graph rendering work?"`
+- `"What files are in the src directory and what do they do?"`
+- `"What would I need to build to make the Battle button work?"`
 
 > 💡 Use **@workspace** to give Copilot project-wide context for more accurate answers.
 <!-- track:vscode:end -->
 
 <!-- track:cli:start -->
-### Task 1: Review Repository Instructions
+### Task 1: Enhance Repository Instructions with /init
 
-1. Open `.github/copilot-instructions.md` and review the repo-specific guidance that's already included.
-2. Confirm it covers the mandatory development checklist, build and dev commands, and the retro arcade theme.
-3. If you want to personalize it for your own repo, ask Copilot for a concise update and review the proposed changes before approving them.
-4. Commit the instructions file only if you changed it.
+The repo already includes a minimal `.github/copilot-instructions.md` with the basics. Let's use `/init` to enrich it:
 
-> **Result:** Future CLI sessions automatically inherit repository-specific instructions from files like `.github/copilot-instructions.md` or `AGENTS.md`.
+1. In Copilot CLI, type:
+
+   ```
+   /init
+   ```
+
+2. Review the generated updates — Copilot will analyze your project and suggest improvements to the instructions file.
+3. Make sure the result includes:
+   - A mandatory development checklist (`npm run build`, `npm run dev`)
+   - The project overview and tech stack
+   - Coding conventions
+4. Commit the updated instructions file.
+
+> **Result:** Future CLI sessions automatically inherit enriched repository-specific instructions from `.github/copilot-instructions.md`.
 
 ### Task 2: Tune Your CLI Environment
 
@@ -185,8 +192,8 @@ Practice the CLI controls that make later steps smoother:
 Try these prompts inside Copilot CLI:
 
 - `Give me an overview of this project.`
-- `@src/pages/api/contributions/[username].ts Explain what this route does and how it handles caching.`
-- `@src/pages/index.astro Explain how the contribution graph is rendered.`
+- `@src/pages/api/contributions/[username].ts What is this file for and what needs to be built here?`
+- `@src/pages/index.astro What exists here and what would I need to add to build the battle page?`
 
 If you want a quick one-shot answer outside the interactive session, try:
 
@@ -202,6 +209,6 @@ copilot -sp "Summarize the architecture of this repo in 5 bullet points"
 You've learned how to:
 
 - **Set up** the repo and local development environment
-- **Create instructions** so Copilot understands your project
+- **Enrich instructions** with `/init` so Copilot understands your project
 - **Establish a review habit** before applying generated changes
 - **Explore the codebase** with context-rich prompts

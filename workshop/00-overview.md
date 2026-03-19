@@ -6,7 +6,7 @@
 > **Level:** Intermediate  
 > **Stack:** Astro / Node.js / TypeScript
 
-Build a retro arcade GitHub contribution comparison app — **Mona Mayhem** — while learning the full spectrum of GitHub Copilot workflows. The deployed workshop now supports **two tracks**: a VS Code experience and a GitHub Copilot CLI experience.
+Build a retro arcade GitHub contribution comparison app — **Mona Mayhem** — while learning the full spectrum of GitHub Copilot workflows. The workshop supports **two tracks**: a VS Code experience and a GitHub Copilot CLI experience.
 
 ---
 
@@ -15,7 +15,7 @@ Build a retro arcade GitHub contribution comparison app — **Mona Mayhem** — 
 - **VS Code track** — stay inside the editor and practice Chat, Plan Mode, Agent Mode, background agents, and the built-in review loop.
 - **CLI track** — stay in the terminal and practice `copilot`, `@file` context, `/plan`, autonomous edits, `/fleet`, `/delegate`, and `/review`.
 
-Use the toggle at the top of the deployed docs site to switch between them at any time.
+Follow the track that matches your preferred workflow.
 
 ---
 
