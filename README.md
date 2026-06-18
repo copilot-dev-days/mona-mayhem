@@ -57,10 +57,27 @@ The workshop supports two tracks — follow the one that matches your preferred 
 
 ## Technology Stack
 
-- **Framework**: [Astro](https://astro.build/) v5
+- **Framework**: [Astro](https://astro.build/) v6
 - **Runtime**: Node.js with [@astrojs/node](https://docs.astro.build/en/guides/integrations-guide/node/) adapter
 - **Font**: Press Start 2P (retro gaming font)
 - **API**: GitHub's contribution graph API
+
+## Deployment Notes
+
+### Current GitHub Pages setup
+
+The workflow in `.github/workflows/deploy.yml` currently deploys static workshop/docs content from `docs/` and `workshop/` to GitHub Pages. It does not build or deploy the Astro app from `src/`.
+
+### If you want to deploy the Astro app to GitHub Pages
+
+GitHub Pages is static hosting, so the Astro app should use static output.
+
+1. Change `output` in `astro.config.mjs` from `server` to `static`.
+2. Remove the Node adapter (`@astrojs/node`) from `astro.config.mjs` and `package.json`.
+3. Update the GitHub Actions workflow to run `npm ci` and `npm run build`, then upload `dist/` as the Pages artifact.
+4. If deploying to a project page (`https://<user>.github.io/<repo>/`), set `site` and `base` in `astro.config.mjs`.
+
+If you plan to keep API routes running in production, use a server platform instead of GitHub Pages (for example, Vercel, Netlify, or a Node host).
 
 ## License
 
